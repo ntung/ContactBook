@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+        <title>Manage My Phonebook</title>
+    </head>
+    <h1>Update Phonebook</h1>
+       {% block body %}
+        <body>
+            <nav>
+            <a href="{{ url_for('welcome') }}">Home</a> 
+            <a class="logout" href="{{ url_for('logout') }}">Logout</a> 
+            </nav>
+            <datalist id="email_type">
+                <option value="Work">
+                <option value="Personal">
+                <option value="Misc">
+            </datalist>
+            <datalist id="number_type">
+                <option value="Mobile">
+                <option value="Home">
+                <option value="Work">
+            </datalist>
+            <datalist id="address_type">
+                <option value="Home">
+                <option value="Work">
+            </datalist>
+            <script language="javascript">
+                curr_n_count=0
+                curr_e_count=0
+                curr_a_count=0
+                function add_number(table_id, n_count){
+                    curr_n_count=curr_n_count>n_count?curr_n_count:n_count;
+                    add_row(table_id, 'tel','number_type',curr_n_count);
+                    curr_n_count++;
+                };    
+                function add_email(table_id, e_count){
+                    curr_e_count=curr_e_count>e_count?curr_e_count:e_count;
+                    add_row(table_id, 'email','email_type',curr_e_count);
+                    curr_e_count++;
+                };    
+                function add_address(table_id, a_count){
+                    curr_a_count=curr_a_count>a_count?curr_a_count:a_count;
+                    add_row(table_id, 'text','address_type',curr_a_count);
+                    curr_a_count++;
+                };    
+                function add_row(table_id,element_type,datalist_id,count){
+                    var table = document.getElementById(table_id);
+                    var row_count = table.rows.length;
+                    var row = table.insertRow(row_count);
+
+                    var cell1=row.insertCell(0)
+                    var cell2=row.insertCell(1)
+                    var cell3 = row.insertCell(2)
+
+
+
+                    var input1 = document.createElement('input');
+                    var input2 = document.createElement('input');
+                    input1.type=element_type; 
+                    input2.type="text"; 
+                    datalist=document.getElementById(datalist_id)
+                    input2.list=datalist;
+                    input1.name=table_id+""+count;
+                    input2.name=table_id+"_type"+count;
+                    cell1.appendChild(input1);
+                    cell2.appendChild(input2);
+
+
+                    var button = document.createElement("button");
+                    button.name = "button";
+                    button.title = "delete";
+                    button.type = "button";
+                    button.onclick=function(){delete_row(table_id,button);}
+                    var button_text = document.createTextNode("delete");
+                    button.appendChild(button_text)
+                    cell3.appendChild(button);
+                    
+
+                };
+                function delete_row(table_id, row_element){
+                    var table = document.getElementById(table_id);
+                    table.deleteRow(row_element.parentNode.parentNode.rowIndex)
+                };
+
+
+                delete_contact=false
+                function confirm_delete(){
+                    if(delete_contact ){
+                        if (confirm('Are you sure you want to delete?')){
+                            return true;
+                            }else{
+                            delete_contact=false
+                            return false
+                        }
+                    }
+                    return true
+                }
+
+            </script>
+
+            <form class="add" id="update" onsubmit="return confirm_delete();" method="POST">
+                
+                Enter Contact Name: <input type="text" name="contact_name" value="{{contact.name}}" required> <input type="submit" onclick="delete_contact=true" name="submit" value="Delete Contact">
+                <br><br>
+                Add Numbers:
+
+                     <table id="numbers" style="width:25%">
+                        <tr>
+                        <th>Number</th>
+                        <th>Type</th>
+                        </tr>
+                        {%for number in numbers%}
+                            <tr>
+                                <td><input type="tel" name="numbers{{loop.index0}}" value="{{number.phone_number}}"></td>
+                                <td><input type="text" name="numbers_type{{loop.index0}}" list="number_type" value="{{number.number_type}}"></td> 
+                                <td><input type="button" class="button" onclick="delete_row('numbers',this)" value="delete"></td>
+                             </tr>
+                        {%endfor%}
+
+                        <tr><input type="button" class="button" onclick="add_number('numbers', {{numbers|list|length}})" value="+"></tr>
+                        
+                    </table>
+                    <br>
+
+                Add Emails:
+                     <table id="emails" style="width:25%">
+                        <tr>
+                        <th>Email</th>
+                        <th>Type</th> 
+                        </tr>
+                        {%for email in emails%}
+                             <tr>
+                                <td><input type="email" name="emails{{loop.index0}}" value="{{email.email_address}}"></td>
+                                <td><input type="text" name="emails_type{{loop.index0}}" list="email_type" value="{{email.email_type}}"></td> 
+                                <td><input type="button" class="button" onclick="delete_row('emails',this)" value="delete"></td>
+                             </tr>
+                        {%endfor%}
+                        <tr><input type="button" class="button" onclick="add_email('emails', {{emails|list|length}})" value="+"></tr>
+                    </table>
+                    <br>
+
+                Add Addresses:
+                     <table id="addresses" style="width:25%">
+                        <tr>
+                        <th>Address</th>
+                        <th>Type</th> 
+                        </tr>
+                        {%for address in addresses%}
+                             <tr>
+                                <td><input type="text" name="addresses{{loop.index0}}" value="{{address.address}}"></td>
+                                <td><input type="text" name="addresses_type{{loop.index0}}" list="address_type" value="{{address.address_type}}"></td> 
+                                <td><input type="button" class="button" onclick="delete_row('addresses',this)" value="delete"></td>
+                             </tr>
+                        {%endfor%}
+                        <tr><input type="button" class="button" onclick="add_address('addresses', {{addresses|list|length}})" value="+"></tr>
+                    </table>
+                    <br>
+                    Add Birthday:
+                    <input type="date" name="birthday" value="{{contact.birthday}}">
+                
+                <br>
+                <br>
+                <input type="submit" name="submit" value="Save">
+            </form>
+
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endblock %}
+
+        </body>
+</html>

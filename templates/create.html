@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+        <title>Manage My Phonebook</title>
+    </head>
+        <h2>Create New Phonebook</h2>
+       {% block body %}
+        <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        </nav>
+        <body>
+            <p>
+            <form name="phonebook" method="POST">
+                *Enter new phonebook name: <input type="text" name="phonebook_name" required><br>
+                *Enter new password:       <input type="password"  name="password1" required><br>
+                *Re-type password:       <input type="password" name="password2" required><br>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+            </p>
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endblock %}
+
+        </body>
+</html>

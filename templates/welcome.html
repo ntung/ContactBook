@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+        <title>Manage My Phonebook</title>
+    </head>
+    {% block body %}
+    <h1>Welcome!</h1>
+        <body>
+            <nav>
+            <a href="{{ url_for('add') }}">Add</a> 
+            <a class="logout" href="{{ url_for('logout') }}">Logout</a> 
+            </nav>
+             <form name="phonebook" id="welcome" method="POST">
+                 <ul class=contacts>
+
+                     {% for contact in contacts recursive %}
+                        <details>
+                        <summary> <em>{{contact.name}}</em> <button type="submit"  name="submit" value={{contact.contact_id}}>Update</button></summary>
+                        <div class="contact_details">
+                        <b>Numbers:</b>
+                        {% for number in contact.numbers if number.contact_id == contact.contact_id%}
+                        <ul>{{number.number_type}}: {{number.phone_number}}</ul>
+                        {% endfor %}
+                        <br>
+
+                        <b>Emails:</b>
+                        {% for email in contact.emails if email.contact_id == contact.contact_id%}
+                        <ul>{{email.email_type}}: {{email.email_address}}</ul>
+                        {% endfor %}
+                        <br>
+
+
+                        <b>Addresses:</b>
+                        {% for address in contact.addresses if address.contact_id == contact.contact_id%}
+                        <ul>{{address.address_type}}: {{address.address}}</ul>
+                        {% endfor %}
+                        <br>
+
+                        <b>Birthday:</b><br>
+                        <ul> {{contact.birthday}}</ul>
+                        </div>
+                        </details>
+                        <br>
+                    {% else %}
+                    <li><em>No contacts here so far</em></li>
+                    {% endfor %}
+                </ul>
+        </form>
+        </body>
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% endblock %}
+</html>

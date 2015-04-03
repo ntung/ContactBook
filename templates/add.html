@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+        <title>Manage My Phonebook</title>
+    </head>
+    <h1>Add to Phonebook</h1>
+       {% block body %}
+       <body>
+           <nav>
+           <a href="{{ url_for('welcome') }}">Home</a>
+           <a class="logout" href="{{ url_for('logout') }}">Logout</a> 
+           </nav>
+            <datalist id="email_type">
+                <option value="Work">
+                <option value="Personal">
+                <option value="Misc">
+            </datalist>
+            <datalist id="number_type">
+                <option value="Mobile">
+                <option value="Home">
+                <option value="Work">
+            </datalist>
+            <datalist id="address_type">
+                <option value="Home">
+                <option value="Work">
+            </datalist>
+            <script language="javascript">
+                n_count=1;
+                e_count=1;
+                a_count=1;
+                function add_number(table_id){
+                    add_row(table_id, 'tel','number_type',n_count);
+                    n_count++;
+                };    
+                function add_email(table_id){
+                    add_row(table_id, 'email','email_type',e_count);
+                    e_count++;
+                };    
+                function add_address(table_id){
+                    add_row(table_id, 'text','address_type',a_count);
+                    a_count++;
+                };    
+                function add_row(table_id,element_type,datalist_id,count){
+                    var table = document.getElementById(table_id);
+                    var row_count = table.rows.length;
+                    var row = table.insertRow(row_count);
+
+                    var cell1=row.insertCell(0)
+                    var cell2=row.insertCell(1)
+                    var cell3 = row.insertCell(2)
+
+
+
+                    var input1 = document.createElement('input');
+                    var input2 = document.createElement('input');
+                    input1.type=element_type; 
+                    input2.type="text"; 
+                    datalist=document.getElementById(datalist_id)
+                    input2.list=datalist;
+                    input1.name=table_id+""+count;
+                    input2.name=table_id+"_type"+count;
+                    cell1.appendChild(input1);
+                    cell2.appendChild(input2);
+
+
+                    var button = document.createElement("button");
+                    button.name = "button";
+                    button.title = "delete";
+                    button.type = "button";
+                    button.onclick=function(){delete_row(table_id,button);}
+                    var button_text = document.createTextNode("delete");
+                    button.appendChild(button_text)
+                    cell3.appendChild(button);
+                    
+
+                };
+                function delete_row(table_id, row_element){
+                    var table = document.getElementById(table_id);
+                    table.deleteRow(row_element.parentNode.parentNode.rowIndex)
+                    }
+                </script>
+            <form name="phonebook" class="add" method="POST">
+                Enter Contact Name: <input type="text" name="contact_name" required>
+                <br><br>
+                Add Numbers:
+
+                     <table id="numbers" style="width:25%">
+                        <tr>
+                        <th>Number</th>
+                        <th>Type</th> 
+                        </tr>
+                        <tr>
+                            <td><input type="tel" name="numbers0"></td>
+                            <td><input type="text" name="numbers_type0" list="number_type"></td> 
+                            <td><input type="button" class="button" onclick="delete_row('numbers',this)" value="delete"></td>
+                        </tr>
+                        <tr><input type="button" class="button" onclick="add_number('numbers')" value="+"></tr>
+                    </table>
+                    <br>
+
+                Add Emails:
+                     <table id="emails" style="width:25%">
+                        <tr>
+                        <th>Email</th>
+                        <th>Type</th> 
+                        </tr>
+                        <tr>
+                            <td><input type="email" name="emails0"></td>
+                            <td><input type="text" name="emails_type0" list="email_type"></td> 
+                            <td><input type="button" class="button" onclick="delete_row('emails',this)" value="delete"></td>
+                        </tr>
+                        <tr><input type="button" class="button" onclick="add_email('emails')" value="+"></tr>
+                    </table>
+                    <br>
+
+                Add Addresses:
+                     <table id="addresses" style="width:25%">
+                        <tr>
+                        <th>Address</th>
+                        <th>Type</th> 
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="addresses0"></td>
+                            <td><input type="text" name="addresses_type0" list="address_type"></td> 
+                            <td><input type="button" class="button" onclick="delete_row('addresses',this)" value="delete"></td>
+                        </tr>
+                        <tr><input type="button" class="button" onclick="add_address('addresses')" value="+"></tr>
+                    </table>
+                    <br>
+                    Add Birthday:
+                    <input type="date" name="birthday">
+                
+                <br>
+                <br>
+                <input type="submit" name="submit" value="Save">
+            </form>
+
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endblock %}
+
+        </body>
+</html>
