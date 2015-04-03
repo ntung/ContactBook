@@ -22,19 +22,19 @@ def extract_contact_details_from_template_then_map(request, contact):
     a_type={}
     
     #Get  the list of numbers, emails, and addresses from the form
-    for k,v in request.form.iteritems():
-        if k.startswith("numbers_type"):
-            n_type[k.strip("numbers_type")]=v
-        elif k.startswith("numbers"):
-            numbers[k.strip("numbers")]=v
-        elif k.startswith("emails_type"):
-            e_type[k.strip("emails_type")]=v
-        elif k.startswith("emails"):
-            emails[k.strip("emails")]=v
-        elif k.startswith("addresses_type"):
-            a_type[k.strip("addresses_type")]=v
-        elif k.startswith("addresses"):
-            addresses[k.strip("addresses")]=v
+    for key, value in request.form.iteritems():
+        if key.startswith("numbers_type"):
+            n_type[key.strip("numbers_type")]=value
+        elif key.startswith("numbers"):
+            numbers[key.strip("numbers")]=value
+        elif key.startswith("emails_type"):
+            e_type[key.strip("emails_type")]=value
+        elif key.startswith("emails"):
+            emails[key.strip("emails")]=value
+        elif key.startswith("addresses_type"):
+            a_type[key.strip("addresses_type")]=value
+        elif key.startswith("addresses"):
+            addresses[key.strip("addresses")]=value
 
     #Add the list of numbers, emails, and addresses to contact
     contact.numbers=[manage.create_number(number, n_type[key]) for key, number in numbers.iteritems()]
