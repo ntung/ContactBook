@@ -26,6 +26,10 @@ def create_address(address, a_type):
     """Return an Address instance using the given parameters"""
     return Address(address=address,address_type=a_type)
 
+def get_phonebook(phonebook_name):
+    """Return an existing Phonebook instance given the name"""
+    return session.query(Phonebook).filter_by(name=phonebook_name).first()
+
 def phonebook_password_exists(phonebook_name, password):
     """Return True if a Phonebook exists given the name and the password"""
     phonebook= session.query(Phonebook).filter_by(name=phonebook_name).filter_by(password=password).first()
@@ -33,17 +37,12 @@ def phonebook_password_exists(phonebook_name, password):
 
 def phonebook_exists(phonebook_name):
     """Return True if a Phonebook instance exists given the name"""
-    phonebook= session.query(Phonebook).filter_by(name=phonebook_name).first()
-    return phonebook != None
+    return get_phonebook(phonebook_name) != None
 
 def contact_exists(name, phonebook_name):
     """Return True if a Contact instance exists given the name and phonebook name"""
     contact= session.query(Contact).filter_by(name=name).filter_by(phonebook_name=phonebook_name).first()
     return contact != None
-
-def get_phonebook(phonebook_name):
-    """Return an existing Phonebook instance given the name"""
-    return session.query(Phonebook).filter_by(name=phonebook_name).first()
 
 def get_contacts(phonebook_name):
     """Return a list of Contact instances given the phonebook name"""

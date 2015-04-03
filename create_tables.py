@@ -1,4 +1,3 @@
-#Import
 from sqlalchemy import create_engine, Column, ForeignKey,Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref, sessionmaker
@@ -6,24 +5,26 @@ import sys
 
 #Author: Mary Akinlonu
 #Date: December 1, 2014
-#About: Model to create ORM, data tables, and  methods
+#About:
+#-Model to create ORM, data tables, and  methods
+#-Used cascading to make save-update and delete clean
 #Updated: April 2, 2015
 
 
-#Engine
+#~~~~~~~~~~Engine~~~~~~~~~
 engine = create_engine('sqlite:///phonebookmanager.db', echo=False)
 
-#Base
+#~~~~~~~~~~Base~~~~~~~~~
 Base = declarative_base()
 
 
 
-#Session
+#~~~~~~~~Session~~~~~~~~~~~
 Session = sessionmaker(bind=engine)
 
 session=Session()
 
-#tables
+#~~~~~~~~~ORM Tables~~~~~~~~~
 class Phonebook(Base):
     __tablename__="phonebook"
 
@@ -133,5 +134,5 @@ class Address(Base):
 
 
 
-#create
+#~~~~~~Create Engine~~~~~~~~~~~
 Base.metadata.create_all(engine)
