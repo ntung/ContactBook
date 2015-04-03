@@ -37,7 +37,7 @@ class TestOldPhonebookNewContact(unittest.TestCase):
     contact_l_name=["Black", "Green", "White", "Blue", "Brown"]
     contact_name=random.choice(contact_f_name)+" "+random.choice(contact_l_name)
     contact_number=str(random.randrange(100, 1000))+"-"+str(random.randrange(100, 1000))+"-"+str(random.randrange(1000, 10000))
-    new_contact=Contact(phonebook_name=book.name, name=contact_name, birthday="04/01/2015")
+    new_contact=Contact(phonebook_name=book.name, name=contact_name, birthday="2015-04-01")
     new_number=Number(phone_number=contact_number, number_type="Mobile")
     new_email=Email(email_address="abc@gmail.com", email_type="Personal")
     new_address=Address(address="123 Abc Street", address_type="Home")
@@ -61,7 +61,7 @@ if __name__ == '__main__':
         #Helper functions to create phonebook and contact
         def create_phonebook_with_contact():
             number=Number(phone_number="123-456-7890", number_type="Mobile")
-            contact=Contact(phonebook_name="testbook", name="Test Person", birthday="04/01/2015")
+            contact=Contact(phonebook_name="testbook", name="Test Person", birthday="2015-04-01")
             book = Phonebook(name="testbook", password="abc")
             
             contact.numbers.append(number)

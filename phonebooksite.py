@@ -101,7 +101,7 @@ def add():
             if manage.contact_exists(contact_name, phonebook_name):
                 flash("Contact name already exists")
             else:
-                contact=manage.create_contact(phonebook_name,contact_name,birthday)
+                contact=manage.create_contact(phonebook_name,contact_name,birthday=birthday)
                 extract_contact_details_from_template_then_map(request, contact)
                 phonebook.contacts.append(contact)
                 manage.session.commit()
