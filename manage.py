@@ -2,7 +2,7 @@ from create_tables import create_engine, Base, Contact, Phonebook, Address, Emai
 
 #Author: Mary Akinlonu
 #Date: December 1, 2014
-#About: Contains helper function that adds to and  queries the phonebook data base
+#About: Contains helper functions that adds to and  queries the phonebook database
 #Updated: April 2, 2014
 
 #Helper Functions
