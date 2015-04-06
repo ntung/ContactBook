@@ -8,7 +8,9 @@ from create_tables import create_engine, Base, Contact, Phonebook, Address, Emai
 #Helper Functions
 def create(phonebook_name, password):
     """Create a phonebook instance in the Phonebook data table"""
-    Phonebook(name=phonebook_name, password = password).create()
+    phonebook=Phonebook(name=phonebook_name, password = password)
+    phonebook.create()
+    return phonebook
 
 def create_contact(phonebook, name, first_name="", last_name="",birthday=""):
     """Return a Contact instance using the given paramenters"""
@@ -41,8 +43,7 @@ def phonebook_exists(phonebook_name):
 
 def contact_exists(name, phonebook_name):
     """Return True if a Contact instance exists given the name and phonebook name"""
-    contact= session.query(Contact).filter_by(name=name).filter_by(phonebook_name=phonebook_name).first()
-    return contact != None
+    return get_contact_by_name(name, phonebook_name)!= None
 
 def get_contacts(phonebook_name):
     """Return a list of Contact instances given the phonebook name"""
@@ -51,6 +52,10 @@ def get_contacts(phonebook_name):
 def get_contact(contact_id):
     """Return an existing Contact instance given the id"""
     return session.query(Contact).filter_by(contact_id=contact_id).first()
+
+def get_contact_by_name(name, phonebook_name):
+    """Return an existing Contact instance given the phonebook and contact name"""
+    return session.query(Contact).filter_by(name=name).filter_by(phonebook_name=phonebook_name).first()
 
 def get_numbers(contact_id):
     """Return a list of Number instances given the contact id"""
