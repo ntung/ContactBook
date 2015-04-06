@@ -76,5 +76,5 @@ with the contact table they should be given seperate tables.
 
 Q. Why did you use auto increment integer for their primary keys instead of the provided data ex. email_id instead of email_address?
 A. Given them auto incremented IDs allows for flexibility, future proof code, and custom error handling. Given that cascades are turned on, 
-If email_address was the primary key, I did not want the databse to handle the case where mulitple email addresses of the same spelling were added. 
+If email_address was the primary key, I did not want the databse to handle the case where mulitple email addresses of the same spelling is added. 
 I would be leaving room for database integrity errors. I wanted to be be able to handle duplicate email errors on my own.
