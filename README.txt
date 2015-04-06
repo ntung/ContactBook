@@ -15,38 +15,38 @@ Using sqlalchemy ORM setup (object Class to Object data table relation)
 
 Classes Hierachy
 
-												   |---------|
-										  /-has-a->| Address |
-										 /	       |---------|
-									    /
-									   /
+						   |---------|
+					  /-has-a->| Address |
+					 /	   |---------|
+					/
+				       /
 |-----------|             |----------|/            |--------|
 | Phonebook |---has-a---->| Contact  |---has-a---->| Number |
 |-----------|             |----------|\            |--------|       
-									   \
-									    \
-									     \         |--------|
-									      \-has-a->| Email  |
-									      		   |--------|
+				       \
+					\
+					 \         |--------|
+					  \-has-a->| Email  |
+					           |--------|
 
 
 
 
 Database table Relationship
 
-												       |---------|
-										  /-0-to-many->| Address |
-										 /	           |---------|
-									    /
-									   /
+						       |---------|
+					  /-0-to-many->| Address |
+					 /	       |---------|
+					/
+				       /
 |-----------|             |----------|/                |--------|
 | Phonebook |-0-to-many-->| Contact  |---0-to-many---->| Number |
 |-----------|             |----------|\                |--------|       
-									   \
-									    \
-									     \             |--------|
-									      \-0-to-many->| Email  |
-									      		       |--------|
+				       \
+					\
+					 \             |--------|
+					  \-0-to-many->| Email  |
+						       |--------|
 
 
 				Primary Keys, Foreign Keys, and Cascades 
