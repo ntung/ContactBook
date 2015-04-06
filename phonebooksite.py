@@ -6,7 +6,7 @@ import os
 #Date: December 1, 2014
 #About: A password protected phonebook manager that allows users to add, update, and delete contact information.
 #This app uses flask, sqlalchemy, html, css
-#Updated: April 2, 2015
+#Updated: April 6, 2015
 
 
 
@@ -15,31 +15,31 @@ import os
 def extract_contact_details_from_template_then_map(request, contact):
     """Map contact details from the form to the contact instance"""
     numbers={}
-    n_type={}
+    number_types={}
     emails={}
-    e_type={}
+    email_types={}
     addresses={}
-    a_type={}
+    address_types={}
     
     #Get  the list of numbers, emails, and addresses from the form
     for key, value in request.form.iteritems():
         if key.startswith("numbers_type"):
-            n_type[key.strip("numbers_type")]=value
+            number_types[key.strip("numbers_type")]=value
         elif key.startswith("numbers"):
             numbers[key.strip("numbers")]=value
         elif key.startswith("emails_type"):
-            e_type[key.strip("emails_type")]=value
+            email_types[key.strip("emails_type")]=value
         elif key.startswith("emails"):
             emails[key.strip("emails")]=value
         elif key.startswith("addresses_type"):
-            a_type[key.strip("addresses_type")]=value
+            address_types[key.strip("addresses_type")]=value
         elif key.startswith("addresses"):
             addresses[key.strip("addresses")]=value
 
     #Add the list of numbers, emails, and addresses to contact
-    contact.numbers=[manage.create_number(number, n_type[key]) for key, number in numbers.iteritems()]
-    contact.emails=[manage.create_email(email, e_type[key]) for key, email in emails.iteritems()]
-    contact.addresses=[manage.create_address(address, a_type[key]) for key, address in addresses.iteritems()]
+    contact.numbers=[manage.create_number(number, number_types[key]) for key, number in numbers.iteritems()]
+    contact.emails=[manage.create_email(email, email_types[key]) for key, email in emails.iteritems()]
+    contact.addresses=[manage.create_address(address, address_types[key]) for key, address in addresses.iteritems()]
 
 
 
