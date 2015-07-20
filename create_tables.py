@@ -17,11 +17,8 @@ engine = create_engine('sqlite:///phonebookmanager.db', echo=False)
 #~~~~~~~~~~Base~~~~~~~~~
 Base = declarative_base()
 
-
-
 #~~~~~~~~Session~~~~~~~~~~~
 Session = sessionmaker(bind=engine)
-
 session=Session()
 
 #~~~~~~~~~ORM Tables~~~~~~~~~
@@ -130,9 +127,5 @@ class Address(Base):
             return False
         return True
 
-
-
-
-
 #~~~~~~Create Engine~~~~~~~~~~~
-Base.metadata.create_all(engine)
+#Base.metadata.create_all(engine)
