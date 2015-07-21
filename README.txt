@@ -2,7 +2,7 @@
 How to use (only locally for now)
 ---------------------------------
 (Assuming you have installed python 2.7, sqlalchemy, and flask)
-1. Download from bitbucket
+1. Download from github
 2. change directory (cd) to App directory
 3. Run 'python phonebooksite.py'
 4. App will show up on http://127.0.0.1:5000/
